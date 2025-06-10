@@ -1,0 +1,15 @@
+/home/zizo/rust-projects/trading-bot/hft_trading_bot/target/debug/deps/libuuid-6c38776a3a4715c6.rmeta: /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/lib.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/builder.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/error.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/non_nil.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/parser.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/fmt.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/timestamp.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/v4.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/rng.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/external.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/macros.rs
+
+/home/zizo/rust-projects/trading-bot/hft_trading_bot/target/debug/deps/uuid-6c38776a3a4715c6.d: /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/lib.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/builder.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/error.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/non_nil.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/parser.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/fmt.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/timestamp.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/v4.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/rng.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/external.rs /home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/macros.rs
+
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/lib.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/builder.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/error.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/non_nil.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/parser.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/fmt.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/timestamp.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/v4.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/rng.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/external.rs:
+/home/zizo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/uuid-1.17.0/src/macros.rs:
