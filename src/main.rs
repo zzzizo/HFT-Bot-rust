@@ -1,10 +1,10 @@
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 use tokio::sync::{Mutex, RwLock};
 use tokio::time;
-use serde::{Deserialize, Serialize};
-use reqwest::Client;
 use uuid::Uuid;
 
 // Core data structures
@@ -80,7 +80,7 @@ impl Default for RiskParams {
             max_position_size: 1000.0,
             max_loss_per_trade: 100.0,
             max_daily_loss: 500.0,
-            stop_loss_pct: 0.02, // 2%
+            stop_loss_pct: 0.02,   // 2%
             take_profit_pct: 0.04, // 4%
         }
     }
@@ -124,7 +124,7 @@ impl TradingStrategy for MomentumStrategy {
             return None;
         }
 
-        let price_change = (recent_prices[0] - recent_prices[recent_prices.len() - 1]) 
+        let price_change = (recent_prices[0] - recent_prices[recent_prices.len() - 1])
             / recent_prices[recent_prices.len() - 1];
 
         let volume_avg = prices
@@ -132,7 +132,8 @@ impl TradingStrategy for MomentumStrategy {
             .rev()
             .take(self.lookback_period)
             .map(|p| p.volume)
-            .sum::<f64>() / self.lookback_period as f64;
+            .sum::<f64>()
+            / self.lookback_period as f64;
 
         if price_change.abs() > self.momentum_threshold && volume_avg > 1000.0 {
             let action = if price_change > 0 {
@@ -232,7 +233,7 @@ impl RiskManager {
 
     pub async fn validate_order(&self, order: &Order, current_price: f64) -> bool {
         let daily_pnl = *self.daily_pnl.lock().await;
-        
+
         // Check daily loss limit
         if daily_pnl < -self.params.max_daily_loss {
             println!("Order rejected: Daily loss limit exceeded");
@@ -275,7 +276,7 @@ impl RiskManager {
         // Update position
         let total_cost = position.quantity * position.avg_price + quantity * price;
         position.quantity += quantity;
-        
+
         if position.quantity != 0.0 {
             position.avg_price = total_cost / position.quantity;
         }
@@ -301,7 +302,7 @@ impl MarketDataFeed {
         // This is a simulation - replace with actual API calls
         use rand::Rng;
         let mut rng = rand::thread_rng();
-        
+
         Some(Price {
             symbol: symbol.to_string(),
             price: rng.gen_range(0.1..100.0),
@@ -318,10 +319,10 @@ impl MarketDataFeed {
         use rand::Rng;
         let mut rng = rand::thread_rng();
         let base_price = rng.gen_range(0.1..100.0);
-        
+
         let mut bids = Vec::new();
         let mut asks = Vec::new();
-        
+
         for i in 1..=5 {
             bids.push((base_price - i as f64 * 0.01, rng.gen_range(10.0..1000.0)));
             asks.push((base_price + i as f64 * 0.01, rng.gen_range(10.0..1000.0)));
@@ -356,13 +357,13 @@ impl OrderExecutor {
     pub async fn submit_order(&self, order: Order) -> Result<String, String> {
         // In real implementation, submit to exchange API
         println!("Submitting order: {:?}", order);
-        
+
         let mut pending = self.pending_orders.lock().await;
         pending.push(order.clone());
-        
+
         // Simulate order execution delay
         tokio::time::sleep(Duration::from_millis(10)).await;
-        
+
         Ok(order.id)
     }
 
@@ -415,28 +416,28 @@ impl TradingBot {
             let is_running = Arc::clone(&self.is_running);
 
             let market_feed_ptr = market_feed as *const MarketDataFeed;
-            
+
             let task = tokio::spawn(async move {
                 let market_feed = unsafe { &*market_feed_ptr };
-                
+
                 while *is_running.lock().await {
                     if let Some(price) = market_feed.get_price(&symbol_clone).await {
                         let mut history = price_history.write().await;
-                        let symbol_history = history.entry(symbol_clone.clone())
-                            .or_insert_with(Vec::new);
-                        
+                        let symbol_history =
+                            history.entry(symbol_clone.clone()).or_insert_with(Vec::new);
+
                         symbol_history.push(price);
-                        
+
                         // Keep only last 1000 prices
                         if symbol_history.len() > 1000 {
                             symbol_history.remove(0);
                         }
                     }
-                    
+
                     tokio::time::sleep(Duration::from_millis(100)).await;
                 }
             });
-            
+
             tasks.push(task);
         }
 
@@ -464,7 +465,7 @@ impl TradingBot {
 
             while *is_running.lock().await {
                 let history = price_history.read().await;
-                
+
                 for (symbol, prices) in history.iter() {
                     if prices.len() < 10 {
                         continue;
@@ -475,7 +476,7 @@ impl TradingBot {
                         for strategy in strategies.iter() {
                             if let Some(signal) = strategy.analyze(prices, &orderbook) {
                                 println!("Signal from {}: {:?}", strategy.name(), signal);
-                                
+
                                 // Create order
                                 let order = Order {
                                     id: Uuid::new_v4().to_string(),
@@ -491,29 +492,36 @@ impl TradingBot {
                                 };
 
                                 // Validate with risk manager
-                                if risk_manager.validate_order(&order, signal.target_price).await {
+                                if risk_manager
+                                    .validate_order(&order, signal.target_price)
+                                    .await
+                                {
                                     // Submit order
-                                    if let Ok(order_id) = order_executor.submit_order(order.clone()).await {
+                                    if let Ok(order_id) =
+                                        order_executor.submit_order(order.clone()).await
+                                    {
                                         println!("Order submitted: {}", order_id);
-                                        
+
                                         // Update position
                                         let quantity = match order.side {
                                             OrderSide::Buy => order.quantity,
                                             OrderSide::Sell => -order.quantity,
                                         };
-                                        
-                                        risk_manager.update_position(
-                                            &order.symbol,
-                                            quantity,
-                                            signal.target_price
-                                        ).await;
+
+                                        risk_manager
+                                            .update_position(
+                                                &order.symbol,
+                                                quantity,
+                                                signal.target_price,
+                                            )
+                                            .await;
                                     }
                                 }
                             }
                         }
                     }
                 }
-                
+
                 tokio::time::sleep(Duration::from_millis(50)).await; // High frequency - 20 Hz
             }
         })
@@ -540,9 +548,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create and start the trading bot
     let bot = TradingBot::new(symbols.clone());
-    
+
     println!("Starting high-frequency trading bot...");
-    
+
     // Run for a specific duration or until interrupted
     let bot_task = tokio::spawn(async move {
         bot.start(symbols).await;
@@ -550,7 +558,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Run for 60 seconds then stop (in production, you'd run indefinitely)
     tokio::time::sleep(Duration::from_secs(60)).await;
-    
+
     println!("Shutting down...");
     bot_task.abort();
 
